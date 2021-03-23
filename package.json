@@ -8,7 +8,7 @@
     "start": "node index",
     "client": "npm start --prefix fileuploader",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
-    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false cd imageuploader && npm install && npm run build"
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix imageuploader && npm run build --prefix imageuploader"
   },
   "author": "Purnanshu Borkar",
   "license": "MIT",
