@@ -1,6 +1,6 @@
 const express = require("express");
 const formidable = require("formidable");
-const { join } = require("path");
+const path = require("path");
 
 const app = express();
 
@@ -17,7 +17,7 @@ app.use(function (req, res, next) {
   next();
 });
 
-app.post("/", (req, res) => {
+app.post("/upload", (req, res) => {
   try {
     const form = new formidable.IncomingForm();
     form.parse(req);
@@ -43,7 +43,13 @@ app.post("/", (req, res) => {
 
 app.get("/uploads/:imagename", (req, res) => {
   res.sendFile(
-    join(__dirname, "fileuploader/src/uploads", req.params.imagename)
+    path.resolve(
+      __dirname,
+      "fileuploader",
+      "src",
+      "uploads",
+      req.params.imagename
+    )
   );
 });
 

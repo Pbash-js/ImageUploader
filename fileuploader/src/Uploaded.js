@@ -3,8 +3,8 @@ import { Typography, Grid, Paper, Box, Button } from "@material-ui/core";
 
 const Uploaded = ({ imagePath }) => {
   if (imagePath.data) {
-    var path = imagePath.data.split("uploads/")[1];
-    console.log(path);
+    console.log(imagePath.data);
+    var path = imagePath.data.split("/uploads")[1];
   }
 
   const ref = useRef(null);
@@ -42,7 +42,7 @@ const Uploaded = ({ imagePath }) => {
                 borderRadius: "1rem",
                 border: "3px dashed rgba(20,20,200,0.3)",
                 backgroundColor: "rgba(50,100,200,0.2)",
-                backgroundImage: `url(http://localhost:5000/uploads/${path})`,
+                backgroundImage: `url(./uploads${path})`,
                 backgroundRepeat: "no-repeat",
                 backgroundPosition: "center",
                 backgroundSize: "contain",
