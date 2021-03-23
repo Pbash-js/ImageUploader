@@ -17,13 +17,7 @@ app.use(function (req, res, next) {
   next();
 });
 
-app.use(express.static("/public"));
-
-app.get("/", (req, res) => {
-  res.sendFile(join(__dirname, "/fileuploader/public/index.html"), (err) => {
-    if (err) throw err;
-  });
-});
+app.use(express.static("../public"));
 
 app.post("/", (req, res) => {
   try {
@@ -54,6 +48,19 @@ app.get("/uploads/:imagename", (req, res) => {
     join(__dirname, "fileuploader/src/uploads", req.params.imagename)
   );
 });
+
+if (process.env.NODE_ENV === "production") {
+  //static file
+  app.use(express.static("fileuploader/build"));
+
+  //serve the static file
+
+  app.get("*", (req, res) => {
+    res.sendFile(
+      path.resolve(__dirname, "fileuploader", "build", "index.html")
+    );
+  });
+}
 
 app.listen(PORT, () => {
   console.log("Server has started!");
