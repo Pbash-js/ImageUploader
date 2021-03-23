@@ -4,10 +4,10 @@ import { Typography, Grid, Paper, Box, Button } from "@material-ui/core";
 const Uploaded = ({ imagePath }) => {
   if (imagePath.data) {
     var path = imagePath.data.split("uploads/")[1];
+    console.log(path);
   }
 
   const ref = useRef(null);
-  console.log(ref.current);
   const handleCopy = () => {
     ref.current.select();
     ref.current.setSelectionRange(0, 99999);

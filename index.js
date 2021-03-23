@@ -17,8 +17,6 @@ app.use(function (req, res, next) {
   next();
 });
 
-app.use(express.static("../public"));
-
 app.post("/", (req, res) => {
   try {
     const form = new formidable.IncomingForm();

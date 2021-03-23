@@ -14,6 +14,7 @@ const handleUpload = async (file, setProgress, setImagePath) => {
     };
     const res = await axios.post("/", formData, config);
     setImagePath(res);
+    console.log(res);
   } catch (error) {
     throw error;
   }
