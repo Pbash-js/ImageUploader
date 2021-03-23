@@ -12,10 +12,9 @@ const handleUpload = async (file, setProgress, setImagePath) => {
         setProgress(parseFloat(progressEvent.loaded / progressEvent.total));
       },
     };
-    const res = await axios.post("http://localhost:5000/", formData, config);
+    const res = await axios.post("/", formData, config);
     setImagePath(res);
   } catch (error) {
-    console.log(error);
     throw error;
   }
 };
