@@ -1,0 +1,23 @@
+{
+  "name": "imageuploader",
+  "version": "1.0.0",
+  "description": "Image uploader",
+  "main": "index.js",
+  "scripts": {
+    "server": "nodemon index",
+    "start": "node index",
+    "client": "npm start --prefix fileuploader",
+    "dev": "concurrently \"npm run server\" \"npm run client\""
+  },
+  "author": "Purnanshu Borkar",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.17.1",
+    "formidable": "^1.2.2",
+    "react": "^17.0.1"
+  },
+  "devDependencies": {
+    "concurrently": "^6.0.0",
+    "nodemon": "^2.0.7"
+  }
+}
