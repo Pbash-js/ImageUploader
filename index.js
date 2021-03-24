@@ -46,7 +46,7 @@ app.get("/uploads/:imagename", (req, res) => {
   try {
     var filepath = path.resolve(
       __dirname,
-      "fileuploader",
+      "/../fileuploader",
       "build",
       "uploads",
       req.params.imagename
