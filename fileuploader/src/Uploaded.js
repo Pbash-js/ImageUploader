@@ -28,11 +28,11 @@ const Uploaded = ({ imagePath }) => {
       >
         <Grid container direction="column" spacing={2}>
           <Grid item>
+            <Typography variant="h4" align="center">
+              ✅
+            </Typography>
             <Typography variant="h5" align="center">
               Uploaded Successfully
-            </Typography>
-            <Typography variant="subtitle2" align="center">
-              Jpeg or PNG
             </Typography>
             <Box
               className="image-area"
@@ -55,7 +55,12 @@ const Uploaded = ({ imagePath }) => {
             </Typography>
           </Grid>
           <Grid container item justify="center">
-            <input ref={ref} type="text" value={`${imagePath.data}`} readOnly />
+            <input
+              ref={ref}
+              type="text"
+              value={`${window.location.hostname}/uploads/${path}`}
+              readOnly
+            />
             <Button variant="contained" color="primary" onClick={handleCopy}>
               Copy Link
             </Button>
