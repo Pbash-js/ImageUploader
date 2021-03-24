@@ -29,7 +29,7 @@ app.post("/upload", (req, res) => {
       file.path =
         __dirname +
         "/fileuploader/public/uploads/" +
-        `${name}-${Date.now()}.${file.name.split(".")[1]}`;
+        `newfile.${file.name.split(".")[1]}`;
     });
 
     form.on("file", (name, file) => {
