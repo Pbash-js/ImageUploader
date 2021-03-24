@@ -68,18 +68,21 @@ if (process.env.NODE_ENV === "production") {
 }
 
 app.listen(PORT, () => {
-  fs.readdir("fileuploader/src/uploads", (err, files) => {
-    if (err) throw err;
-    if (files) {
-      files.forEach((file) => {
-        fs.unlink(
-          path.resolve(__dirname, "fileuploader", "src", "uploads", file),
-          (err) => {
-            if (err) throw err;
-          }
-        );
-      });
+  fs.readdir(
+    path.resolve(__dirname, "fileuploader", "src", "uploads"),
+    (err, files) => {
+      if (err) throw err;
+      if (files) {
+        files.forEach((file) => {
+          fs.unlink(
+            path.resolve(__dirname, "fileuploader", "src", "uploads", file),
+            (err) => {
+              if (err) throw err;
+            }
+          );
+        });
+      }
     }
-  });
+  );
   console.log("Server has started!");
 });
