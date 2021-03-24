@@ -44,7 +44,13 @@ app.post("/upload", (req, res) => {
 
 app.get("/uploads/:imagename", (req, res) => {
   res.sendFile(
-    path.resolve("fileuploader", "build", "uploads", req.params.imagename)
+    path.resolve(
+      __dirname,
+      "fileuploader",
+      "build",
+      "uploads",
+      req.params.imagename
+    )
   );
 });
 
