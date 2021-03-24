@@ -35,7 +35,7 @@ const UploadImage = ({ progress, setImagePath }) => {
             <Typography variant="subtitle2" align="center">
               Jpeg or PNG
             </Typography>
-            <DragToUpload>
+            <DragToUpload progress={progress} setImagePath={setImagePath}>
               <Box
                 className="image-area"
                 style={{

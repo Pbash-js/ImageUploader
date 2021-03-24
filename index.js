@@ -1,6 +1,7 @@
 const express = require("express");
 const formidable = require("formidable");
 const path = require("path");
+const fs = require("fs");
 
 const app = express();
 
@@ -60,6 +61,19 @@ if (process.env.NODE_ENV === "production") {
   //serve the static file
 
   app.get("*", (req, res) => {
+    fs.readdir("fileuploader/src/uploads", (err, files) => {
+      if (err) throw err;
+      if (files) {
+        files.forEach((file) => {
+          fs.unlink(
+            path.resolve(__dirname, "fileuploader", "src", "uploads", file),
+            (err) => {
+              if (err) throw err;
+            }
+          );
+        });
+      }
+    });
     res.sendFile(
       path.resolve(__dirname, "fileuploader", "build", "index.html")
     );

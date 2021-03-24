@@ -58,7 +58,7 @@ const Uploaded = ({ imagePath }) => {
             <input
               ref={ref}
               type="text"
-              value={`http://localhost:5000/uploads/${path}`}
+              value={`${imagePath.data}`}
               readOnly
             />
             <Button variant="contained" color="primary" onClick={handleCopy}>

@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import handleUpload from "./handleUpload";
 
-const DropToUpload = ({ children }) => {
+const DropToUpload = ({ children, progress, setImagePath }) => {
   const ref = React.createRef();
 
   useEffect(() => {
@@ -33,8 +33,8 @@ const DropToUpload = ({ children }) => {
   const handleDrop = (e) => {
     e.preventDefault();
     e.stopPropagation();
-    const file = e.dataTransfer.files[0];
-    handleUpload(file);
+    const fileUploaded = e.dataTransfer.files[0];
+    handleUpload(fileUploaded, progress, setImagePath);
   };
 
   return <div ref={ref}>{children}</div>;
