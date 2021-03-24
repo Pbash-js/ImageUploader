@@ -3,8 +3,8 @@ import { Typography, Grid, Paper, Box, Button } from "@material-ui/core";
 
 const Uploaded = ({ imagePath }) => {
   if (imagePath.data) {
-    console.log(imagePath.data);
-    var path = imagePath.data.split("/uploads/")[1];
+    var path = imagePath.data.split("\\uploads\\")[1];
+    console.log(path);
   }
 
   const ref = useRef(null);
