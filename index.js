@@ -43,15 +43,21 @@ app.post("/upload", (req, res) => {
 });
 
 app.get("/uploads/:imagename", (req, res) => {
-  res.sendFile(
-    path.resolve(
+  try {
+    var filepath = path.resolve(
       __dirname,
       "fileuploader",
       "build",
       "uploads",
       req.params.imagename
-    )
-  );
+    );
+    res.sendFile(filepath);
+  } catch (error) {
+    console.log(error);
+    res.sendFile(
+      path.resolve(__dirname, "fileuploader", "build", "index.html")
+    );
+  }
 });
 
 if (process.env.NODE_ENV === "production") {
