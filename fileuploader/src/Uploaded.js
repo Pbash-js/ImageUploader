@@ -4,7 +4,7 @@ import { Typography, Grid, Paper, Box, Button } from "@material-ui/core";
 const Uploaded = ({ imagePath }) => {
   if (imagePath.data) {
     console.log(imagePath.data);
-    var path = imagePath.data.split("/uploads")[1];
+    var path = imagePath.data.split("/uploads/")[1];
   }
 
   const ref = useRef(null);
@@ -42,7 +42,7 @@ const Uploaded = ({ imagePath }) => {
                 borderRadius: "1rem",
                 border: "3px dashed rgba(20,20,200,0.3)",
                 backgroundColor: "rgba(50,100,200,0.2)",
-                backgroundImage: `url(./uploads${path})`,
+                backgroundImage: `url(${process.env.PUBLIC_URL}/uploads/${path})`,
                 backgroundRepeat: "no-repeat",
                 backgroundPosition: "center",
                 backgroundSize: "contain",
@@ -55,12 +55,7 @@ const Uploaded = ({ imagePath }) => {
             </Typography>
           </Grid>
           <Grid container item justify="center">
-            <input
-              ref={ref}
-              type="text"
-              value={`${imagePath.data}`}
-              readOnly
-            />
+            <input ref={ref} type="text" value={`${imagePath.data}`} readOnly />
             <Button variant="contained" color="primary" onClick={handleCopy}>
               Copy Link
             </Button>

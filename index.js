@@ -28,7 +28,7 @@ app.post("/upload", (req, res) => {
     form.on("fileBegin", (name, file) => {
       file.path =
         __dirname +
-        "/fileuploader/src/uploads/" +
+        "/fileuploader/public/uploads/" +
         `${name}-${Date.now()}.${file.name.split(".")[1]}`;
     });
 
@@ -47,7 +47,7 @@ app.get("/uploads/:imagename", (req, res) => {
     path.resolve(
       __dirname,
       "fileuploader",
-      "src",
+      "build",
       "uploads",
       req.params.imagename
     )
