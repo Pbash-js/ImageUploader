@@ -44,13 +44,7 @@ app.post("/upload", (req, res) => {
 
 app.get("/uploads/:imagename", (req, res) => {
   res.sendFile(
-    path.resolve(
-      __dirname,
-      "fileuploader",
-      "build",
-      "uploads",
-      req.params.imagename
-    )
+    path.resolve("fileuploader", "build", "uploads", req.params.imagename)
   );
 });
 
@@ -61,22 +55,22 @@ if (process.env.NODE_ENV === "production") {
   //serve the static file
 
   app.get("*", (req, res) => {
-    fs.readdir(
-      path.resolve(__dirname, "fileuploader", "build", "uploads"),
-      (err, files) => {
-        if (err) throw err;
-        if (files) {
-          files.forEach((file) => {
-            fs.unlink(
-              path.resolve(__dirname, "fileuploader", "build", "uploads", file),
-              (err) => {
-                if (err) throw err;
-              }
-            );
-          });
-        }
-      }
-    );
+    // fs.readdir(
+    //   path.resolve(__dirname, "fileuploader", "build", "uploads"),
+    //   (err, files) => {
+    //     if (err) throw err;
+    //     if (files) {
+    //       files.forEach((file) => {
+    //         fs.unlink(
+    //           path.resolve(__dirname, "fileuploader", "build", "uploads", file),
+    //           (err) => {
+    //             if (err) throw err;
+    //           }
+    //         );
+    //       });
+    //     }
+    //   }
+    // );
     res.sendFile(
       path.resolve(__dirname, "fileuploader", "build", "index.html")
     );
