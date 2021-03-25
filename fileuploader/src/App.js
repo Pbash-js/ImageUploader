@@ -1,4 +1,3 @@
-import "./App.css";
 import { Grid } from "@material-ui/core";
 import React, { useState } from "react";
 import UploadImage from "./UploadImage";

@@ -26,14 +26,14 @@ app.post("/upload", (req, res) => {
     form.uploadDir = path.resolve(
       __dirname,
       "fileuploader",
-      "build",
+      "public",
       "uploads"
     );
     form.on("fileBegin", (name, file) => {
       filepath = path.resolve(
         __dirname,
         "fileuploader",
-        "build",
+        "public",
         "uploads",
         `newfile.${file.name.split(".")[1]}`
       );
@@ -50,25 +50,77 @@ app.post("/upload", (req, res) => {
   }
 });
 
-// app.get("/uploads/:imagename", (req, res) => {
-//   try {
-//     res.sendFile(
-//       path.resolve(
-//         __dirname,
-//         "fileuploader",
-//         "public",
-//         "uploads",
-//         req.params.imagename
-//       )
-//     );
-//   } catch (error) {
-//     console.log(error);
-//   }
-// });
+app.get("/uploads/:imagename", (req, res) => {
+  try {
+    res.sendFile(
+      path.resolve(
+        __dirname,
+        "fileuploader",
+        "public",
+        "uploads",
+        req.params.imagename
+      )
+    );
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+app.get("*", (req, res) => {
+  fs.readdir(
+    path.resolve(__dirname, "fileuploader", "public", "uploads"),
+    (err, files) => {
+      if (err) throw err;
+      if (files) {
+        files.forEach((file) => {
+          fs.unlink(
+            path.resolve(__dirname, "fileuploader", "public", "uploads", file),
+            (err) => {
+              if (err) throw err;
+            }
+          );
+        });
+      }
+    }
+  );
+  res.sendFile(path.resolve(__dirname, "fileuploader", "build", "index.html"));
+});
 
 if (process.env.NODE_ENV === "production") {
   //static file
   app.use(express.static("fileuploader/build"));
+
+  app.post("/upload", (req, res) => {
+    try {
+      const form = new formidable.IncomingForm();
+      form.parse(req);
+      form.keepExtensions = true;
+      form.uploadDir = path.resolve(
+        __dirname,
+        "fileuploader",
+        "build",
+        "uploads"
+      );
+      form.on("fileBegin", (name, file) => {
+        filepath = path.resolve(
+          __dirname,
+          "fileuploader",
+          "build",
+          "uploads",
+          `newfile.${file.name.split(".")[1]}`
+        );
+        file.path = filepath;
+      });
+
+      form.on("file", (name, file) => {
+        console.log("Uploaded file" + file.name);
+        res.send(filepath);
+      });
+    } catch (error) {
+      console.log("error");
+      throw error;
+    }
+  });
 
   app.get("/uploads/:imagename", (req, res) => {
     try {
@@ -86,30 +138,26 @@ if (process.env.NODE_ENV === "production") {
     }
   });
 
-  //serve the static file
-
   app.get("*", (req, res) => {
-    // fs.readdir(
-    //   path.resolve(__dirname, "fileuploader", "build", "uploads"),
-    //   (err, files) => {
-    //     if (err) throw err;
-    //     if (files) {
-    //       files.forEach((file) => {
-    //         fs.unlink(
-    //           path.resolve(__dirname, "fileuploader", "build", "uploads", file),
-    //           (err) => {
-    //             if (err) throw err;
-    //           }
-    //         );
-    //       });
-    //     }
-    //   }
-    // );
-
-    res.sendFile(
-      path.resolve(__dirname, "fileuploader", "build", "index.html")
+    fs.readdir(
+      path.resolve(__dirname, "fileuploader", "build", "uploads"),
+      (err, files) => {
+        if (err) throw err;
+        if (files) {
+          files.forEach((file) => {
+            fs.unlink(
+              path.resolve(__dirname, "fileuploader", "build", "uploads", file),
+              (err) => {
+                if (err) throw err;
+              }
+            );
+          });
+        }
+      }
     );
   });
+
+  res.sendFile(path.resolve(__dirname, "fileuploader", "build", "index.html"));
 }
 
 app.listen(PORT, () => {

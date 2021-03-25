@@ -13,7 +13,7 @@ const handleUpload = async (file, setProgress, setImagePath) => {
       },
     };
     const res = await axios.post("/upload", formData, config);
-    if (res.status !== 400) setImagePath(res);
+    if (res.status === 200) setImagePath(res);
     else alert("Invalid file");
     console.log(res);
   } catch (error) {
