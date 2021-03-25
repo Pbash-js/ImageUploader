@@ -19,26 +19,26 @@ app.use(function (req, res, next) {
 });
 
 app.post("/upload", async (req, res) => {
-  try {
-    fs.readdir(
-      path.resolve(__dirname, "fileuploader", "build", "uploads"),
-      (err, files) => {
-        if (err) console.log(err);
-        if (files) {
-          files.forEach((file) => {
-            fs.unlink(
-              path.resolve(__dirname, "fileuploader", "build", "uploads", file),
-              (err) => {
-                if (err) console.log(err);
-              }
-            );
-          });
-        }
-      }
-    );
-  } catch (error) {
-    res.send("server error");
-  }
+  // try {
+  //   fs.readdir(
+  //     path.resolve(__dirname, "fileuploader", "build", "uploads"),
+  //     (err, files) => {
+  //       if (err) console.log(err);
+  //       if (files) {
+  //         files.forEach((file) => {
+  //           fs.unlink(
+  //             path.resolve(__dirname, "fileuploader", "build", "uploads", file),
+  //             (err) => {
+  //               if (err) console.log(err);
+  //             }
+  //           );
+  //         });
+  //       }
+  //     }
+  //   );
+  // } catch (error) {
+  //   res.send("server error");
+  // }
   try {
     const form = new formidable.IncomingForm();
     form.parse(req);
@@ -66,7 +66,7 @@ app.post("/upload", async (req, res) => {
     });
   } catch (error) {
     console.log("error");
-    throw error;
+    res.send("error in uploading");
   }
 });
 
@@ -83,6 +83,7 @@ app.get("/uploads/:imagename", (req, res) => {
     );
   } catch (error) {
     console.log(error);
+    res.send("error in getting uploads");
   }
 });
 
