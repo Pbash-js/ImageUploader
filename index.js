@@ -22,23 +22,18 @@ app.post("/upload", (req, res) => {
   try {
     const form = new formidable.IncomingForm();
     form.parse(req);
-    form.onPart = function (part) {
-      if (!/jpg$|png$|jpeg$/.test(part.filename)) {
-        return res.sendStatus(400);
-      }
-    };
     form.keepExtensions = true;
     form.uploadDir = path.resolve(
       __dirname,
       "fileuploader",
-      "public",
+      "build",
       "uploads"
     );
     form.on("fileBegin", (name, file) => {
       filepath = path.resolve(
         __dirname,
         "fileuploader",
-        "public",
+        "build",
         "uploads",
         `newfile.${file.name.split(".")[1]}`
       );
