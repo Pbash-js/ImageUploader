@@ -26,14 +26,14 @@ app.post("/upload", (req, res) => {
     form.uploadDir = path.resolve(
       __dirname,
       "fileuploader",
-      "public",
+      "build",
       "uploads"
     );
     form.on("fileBegin", (name, file) => {
       filepath = path.resolve(
         __dirname,
         "fileuploader",
-        "public",
+        "build",
         "uploads",
         `newfile.${file.name.split(".")[1]}`
       );
@@ -56,7 +56,7 @@ app.get("/uploads/:imagename", (req, res) => {
       path.resolve(
         __dirname,
         "fileuploader",
-        "public",
+        "build",
         "uploads",
         req.params.imagename
       )
@@ -69,54 +69,6 @@ app.get("/uploads/:imagename", (req, res) => {
 if (process.env.NODE_ENV === "production") {
   //static file
   app.use(express.static("fileuploader/build"));
-
-  app.post("/upload", (req, res) => {
-    try {
-      const form = new formidable.IncomingForm();
-      form.parse(req);
-      form.keepExtensions = true;
-      form.uploadDir = path.resolve(
-        __dirname,
-        "fileuploader",
-        "build",
-        "uploads"
-      );
-      form.on("fileBegin", (name, file) => {
-        filepath = path.resolve(
-          __dirname,
-          "fileuploader",
-          "build",
-          "uploads",
-          `newfile.${file.name.split(".")[1]}`
-        );
-        file.path = filepath;
-      });
-
-      form.on("file", (name, file) => {
-        console.log("Uploaded file" + file.name);
-        res.send(filepath);
-      });
-    } catch (error) {
-      console.log("error");
-      throw error;
-    }
-  });
-
-  app.get("/uploads/:imagename", (req, res) => {
-    try {
-      res.sendFile(
-        path.resolve(
-          __dirname,
-          "fileuploader",
-          "build",
-          "uploads",
-          req.params.imagename
-        )
-      );
-    } catch (error) {
-      console.log(error);
-    }
-  });
 
   app.get("*", (req, res) => {
     fs.readdir(
