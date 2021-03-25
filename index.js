@@ -22,6 +22,11 @@ app.post("/upload", (req, res) => {
   try {
     const form = new formidable.IncomingForm();
     form.parse(req);
+    form.onPart = function (part) {
+      if (!/jpg$|png$|jpeg$/.test(part.filename)) {
+        return res.sendStatus(400);
+      }
+    };
     form.keepExtensions = true;
     form.uploadDir = path.resolve(
       __dirname,
