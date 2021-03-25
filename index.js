@@ -155,9 +155,10 @@ if (process.env.NODE_ENV === "production") {
         }
       }
     );
+    res.sendFile(
+      path.resolve(__dirname, "fileuploader", "build", "index.html")
+    );
   });
-
-  res.sendFile(path.resolve(__dirname, "fileuploader", "build", "index.html"));
 }
 
 app.listen(PORT, () => {
