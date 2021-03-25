@@ -66,26 +66,6 @@ app.get("/uploads/:imagename", (req, res) => {
   }
 });
 
-app.get("*", (req, res) => {
-  fs.readdir(
-    path.resolve(__dirname, "fileuploader", "public", "uploads"),
-    (err, files) => {
-      if (err) throw err;
-      if (files) {
-        files.forEach((file) => {
-          fs.unlink(
-            path.resolve(__dirname, "fileuploader", "public", "uploads", file),
-            (err) => {
-              if (err) throw err;
-            }
-          );
-        });
-      }
-    }
-  );
-  res.sendFile(path.resolve(__dirname, "fileuploader", "build", "index.html"));
-});
-
 if (process.env.NODE_ENV === "production") {
   //static file
   app.use(express.static("fileuploader/build"));
