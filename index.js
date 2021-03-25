@@ -19,26 +19,35 @@ app.use(function (req, res, next) {
 });
 
 app.post("/upload", async (req, res) => {
-  // try {
-  //   fs.readdir(
-  //     path.resolve(__dirname, "fileuploader", "build", "uploads"),
-  //     (err, files) => {
-  //       if (err) console.log(err);
-  //       if (files) {
-  //         files.forEach((file) => {
-  //           fs.unlink(
-  //             path.resolve(__dirname, "fileuploader", "build", "uploads", file),
-  //             (err) => {
-  //               if (err) console.log(err);
-  //             }
-  //           );
-  //         });
-  //       }
-  //     }
-  //   );
-  // } catch (error) {
-  //   res.send("server error");
-  // }
+  try {
+    const directory = fs.readdir(
+      path.resolve(__dirname, "fileuploader", "build", "uploads"),
+      (err, files) => {
+        if (err) console.log(err);
+        if (files) {
+          files.forEach((file) => {
+            if (file !== ".gitkeep") {
+              fs.unlink(
+                path.resolve(
+                  __dirname,
+                  "fileuploader",
+                  "build",
+                  "uploads",
+                  file
+                ),
+                (err) => {
+                  if (err) console.log(err);
+                }
+              );
+            }
+          });
+        }
+      }
+    );
+    console.log(directory);
+  } catch (error) {
+    res.send("server error");
+  }
   try {
     const form = new formidable.IncomingForm();
     form.parse(req);
@@ -55,13 +64,13 @@ app.post("/upload", async (req, res) => {
         "fileuploader",
         "build",
         "uploads",
-        `newfile.${file.name.split(".")[1]}`
+        `${name}-${Date.now()}.${file.name.split(".")[1]}`
       );
       file.path = filepath;
     });
 
     form.on("end", (name, file) => {
-      console.log("Uploaded file" + file.name);
+      console.log("Uploaded file" + file);
       res.send(filepath);
     });
   } catch (error) {
