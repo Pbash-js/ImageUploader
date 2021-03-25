@@ -42,7 +42,7 @@ const Uploaded = ({ imagePath }) => {
                 borderRadius: "1rem",
                 border: "3px dashed rgba(20,20,200,0.3)",
                 backgroundColor: "rgba(50,100,200,0.2)",
-                backgroundImage: `url(./uploads/${path})`,
+                backgroundImage: `url(${window.location.hostname}/uploads/${path})`,
                 backgroundRepeat: "no-repeat",
                 backgroundPosition: "center",
                 backgroundSize: "contain",
